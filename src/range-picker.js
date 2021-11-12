@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { DatePicker, Row, Col, ConfigProvider } from "antd";
+import { Dropdown, DatePicker, Row, Col, ConfigProvider } from "antd";
 import { ArrowRightOutlined } from "@ant-design/icons";
 import nl_NL from "antd/lib/locale-provider/nl_NL";
 import "moment/locale/en-gb";
@@ -50,11 +50,33 @@ const Calendar = (props) => {
 
   const handleOpen = () => setDatepicker(!datePicker);
 
-  return (
+  const dropdownOverlay = (
     <StyledCalendar>
       <Row style={{ position: "absolute" }}>
-        <Col style={{ position: "absolute", left: 0 }}>{myDatePicker}</Col>
-        <Col style={{ position: "absolute", left: 280 }}>{myDatePicker}</Col>
+        <Col style={{ position: "absolute", left: 0 }}>
+          <ConfigProvider locale={nl_NL}>
+            <DatePicker
+              style={{ visibility: "hidden" }}
+              suffixIcon={null}
+              open={datePicker}
+              allowClear={false}
+              inputReadOnly={true}
+              format={"YYYY-MM-DD"}
+            />
+          </ConfigProvider>
+        </Col>
+        <Col style={{ position: "absolute", left: 280 }}>
+          <ConfigProvider locale={nl_NL}>
+            <DatePicker
+              style={{ visibility: "hidden" }}
+              suffixIcon={null}
+              open={datePicker}
+              allowClear={false}
+              inputReadOnly={true}
+              format={"YYYY-MM-DD"}
+            />
+          </ConfigProvider>
+        </Col>
       </Row>
 
       <Row
@@ -85,6 +107,14 @@ const Calendar = (props) => {
         </Col>
       </Row>
     </StyledCalendar>
+  );
+
+  return (
+    <Dropdown visible={datePicker} overlay={dropdownOverlay}>
+      <div style={{ cursor: "pointer" }} onClick={handleOpen}>
+        Dropdown
+      </div>
+    </Dropdown>
   );
 };
 
