@@ -1,5 +1,6 @@
 import "antd/dist/antd.css";
 import "./App.scss";
+import "@natscale/react-calendar/dist/main.css";
 import RangePicker from "./range-picker";
 
 function App() {
@@ -9,10 +10,11 @@ function App() {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        height: "100vh",
+        height: "60vh",
       }}
     >
       <RangePicker />
+      {/* <Calendar /> */}
     </div>
   );
 }

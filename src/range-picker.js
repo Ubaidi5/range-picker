@@ -5,6 +5,7 @@ import nl_NL from "antd/lib/locale-provider/nl_NL";
 import "moment/locale/en-gb";
 import styled from "styled-components";
 import PropTypes from "prop-types";
+import { Calendar } from "@natscale/react-calendar";
 
 const StyledCalendar = styled.div`
   background: #ffffff;
@@ -45,47 +46,15 @@ const StyledCalendar = styled.div`
   }
 `;
 
-const Calendar = (props) => {
+const RangePicker = (props) => {
   const [datePicker, setDatepicker] = useState(false);
 
   const handleOpen = () => setDatepicker(!datePicker);
 
   const dropdownOverlay = (
     <StyledCalendar>
-      <Row style={{ position: "absolute" }}>
-        <Col style={{ position: "absolute", left: 0 }}>
-          <ConfigProvider locale={nl_NL}>
-            <DatePicker
-              style={{ visibility: "hidden" }}
-              suffixIcon={null}
-              open={datePicker}
-              allowClear={false}
-              inputReadOnly={true}
-              format={"YYYY-MM-DD"}
-            />
-          </ConfigProvider>
-        </Col>
-        <Col style={{ position: "absolute", left: 280 }}>
-          <ConfigProvider locale={nl_NL}>
-            <DatePicker
-              style={{ visibility: "hidden" }}
-              suffixIcon={null}
-              open={datePicker}
-              allowClear={false}
-              inputReadOnly={true}
-              format={"YYYY-MM-DD"}
-            />
-          </ConfigProvider>
-        </Col>
-      </Row>
-
-      <Row
-        className="date-row"
-        align="middle"
-        justify="space-between"
-        onClick={handleOpen}
-      >
-        <Col>
+      <Row className="date-row" align="middle" justify="space-between">
+        <Col span={24}>
           <Row justify="space-around" align="middle">
             <Col>
               <input className="date-input" placeholder="From" />
@@ -100,10 +69,18 @@ const Calendar = (props) => {
             <Col>
               <input className="date-input" placeholder="To" />
             </Col>
+
+            <Col>
+              <div className="reset-button">Reset</div>
+            </Col>
           </Row>
         </Col>
-        <Col>
-          <div className="reset-button">Reset</div>
+
+        <Col span={12}>
+          <Calendar />
+        </Col>
+        <Col span={12}>
+          <Calendar />
         </Col>
       </Row>
     </StyledCalendar>
@@ -111,26 +88,20 @@ const Calendar = (props) => {
 
   return (
     <Dropdown visible={datePicker} overlay={dropdownOverlay}>
-      <div style={{ cursor: "pointer" }} onClick={handleOpen}>
+      <div className="date-opener" onClick={handleOpen}>
         Dropdown
       </div>
     </Dropdown>
   );
 };
 
-Calendar.defaultProps = {
+RangePicker.defaultProps = {
   isArrow: true,
   isDisabled: false,
   cursor: "pointer",
 };
 
-Calendar.propTypes = {
-  isArrow: PropTypes.bool,
-  isDisabled: PropTypes.bool,
-  cursor: PropTypes.string,
-};
-
-export default Calendar;
+export default RangePicker;
 
 const myDatePicker = (
   <ConfigProvider locale={nl_NL}>
